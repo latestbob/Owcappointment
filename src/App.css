@@ -151,11 +151,11 @@
 
 .time-picker {
   border-radius: 8px;
-  border: solid 1.5px #27ae60;
+  border: solid 1.5px #124B4F;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #27ae60;
+  color: #124B4F;
   padding: 5px 0;
   font-weight: 600;
   font-size: 13px;
@@ -164,6 +164,6 @@
 }
 
 .time-picker.active {
-  background-color: #27ae60;
+  background-color: #124B4F;
   color: #fff;
 }

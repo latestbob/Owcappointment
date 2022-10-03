@@ -102,7 +102,7 @@ function Home() {
 
         {/* Calender Div */}
 
-        <div className='row preferreddate'>
+        <div className='row preferreddate mt-4'>
             <div className='col-md-6 calenderdiv'>
 
             <Calendar 
@@ -113,6 +113,8 @@ function Home() {
             prev2Label={null}
             nextLabel={<i class="fas fa-chevron-right text-secondary"></i>}
             prevLabel={<i class="fas fa-chevron-left text-secondary"></i>}
+
+            tileDisabled={({ date }) => date.getDay() === 0}
             />
 
             </div>
@@ -135,11 +137,48 @@ function Home() {
                                             })}
                                         </div>
 
+                                        
+            <div className='alert alert-info'>
+                <p style={{
+                    fontSize:"15px",
+
+                }}>You have selected </p> 
+                <p style={{
+                    fontSize:"14px",
+                    fontWeight:"bold",
+                }}>Friday, October 21, 2022 by 2:00 pm</p>
             </div>
 
-        </div>
+            </div>
+
+
+
+           
 
         </div>
+
+        <br/>
+        
+            <div className='text-center'>
+            <button className='btn py-2'style={{
+                background:"#D07750",
+                color:"white",
+                borderRadius:"30px",
+                width:"40%",
+                fontSize:"18px",
+                margin:"auto",
+                fontWeight:"600"
+                
+            }}>Next to Continue</button>
+            </div>
+       
+<br/>
+<br/>
+        
+
+        </div>
+
+        
      );
 }
 
