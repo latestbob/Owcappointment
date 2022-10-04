@@ -167,3 +167,19 @@
   background-color: #124B4F;
   color: #fff;
 }
+
+
+
+/* Summary */
+
+.summaryimage{
+  width: 100%;
+}
+.summarypara{
+  font-size:14px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+.summaryheading{
+  color:#D07750;
+}

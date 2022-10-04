@@ -1,13 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import background from './heroo.png';
 
 import { Calendar } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { useState } from 'react';
+import { useState} from 'react';
 import { useForm , Controller } from "react-hook-form";
+import { ErrorMsg } from './error';
+import moment from 'moment';
+import { NotificationManager } from 'react-notifications';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+
+
 
 function Home() {
 
+    
+    const navigate = useNavigate();
     const [times] = React.useState([
     
         { value: '09:00:00', label: '9:00 am' },
@@ -34,6 +45,223 @@ function Home() {
     ]);
     //const {  control } = useForm();
     const { register, handleSubmit, setValue, getValues, watch, control, formState: { errors } } = useForm();
+    
+
+    const [type, setType] = useState('');
+
+    const selectedDate = watch('date');
+    const selectedTime = watch('time');
+    const [showBtn, setShowBtn] = useState(false);
+
+
+
+    const onSubmit = (values) => {
+        // console.log(values)
+        
+       
+        navigate('/summary',{state:{type:type, date:moment(selectedDate).format('dddd, MMMM DD, YYYY'), time: moment(selectedTime, 'h:mm a').format('h:mm a')}});
+           
+
+    }
+
+    React.useEffect(() => {
+        var pickedate = moment(selectedDate).format('dddd, MMMM DD, YYYY')
+        var todaydated = moment().format('dddd, MMMM DD, YYYY')
+        // console.log(moment(selectedDate).format('dddd, MMMM DD, YYYY'));
+        // console.log(moment().format('dddd, MMMM DD, YYYY'))
+
+        console.log(pickedate);
+        console.log(todaydated)
+
+        //console.log(moment(selectedTime, 'h:mm a').format('h:mm a'))
+
+        //
+        //console.log(moment().format('h:mm a'))
+        console.log(moment().format('HH:mm:ss a'))
+        var valuedate = moment().format('HH:mm:ss a');
+        var mytimeselected = moment(selectedTime, 'h:mm a').format('HH:mm:ss a')
+        console.log(mytimeselected);
+
+
+console.log(moment(selectedTime, 'h:mm a').format())
+
+var c = +moment().add(30, 'minutes').format('x');
+var d = moment(selectedTime, 'h:mm a').format();
+
+var e = +moment(selectedTime, 'h:mm a').format('x')
+var f = e / 60000
+
+var g = (e - c) / 60000
+
+console.log(e)
+console.log(f)
+console.log(g)
+    
+
+if(pickedate == todaydated){
+    console.log(moment().format('HH:mm:ss a'))
+var valuedate = moment().format('HH:mm:ss a');
+var mytimeselected = moment(selectedTime, 'h:mm a').format('HH:mm:ss a')
+console.log(mytimeselected);
+
+
+console.log(moment(selectedTime, 'h:mm a').format())
+
+var c = +moment().add(30, 'minutes').format('x');
+var d = moment(selectedTime, 'h:mm a').format();
+
+var e = +moment(selectedTime, 'h:mm a').format('x')
+var f = e / 60000
+
+var g = (e - c) / 60000
+
+// console.log(e)
+// console.log(f)
+console.log(parseInt(g))
+
+/// check if g is greater than 0
+
+if(g >= 1){
+    //setShowBtn(true)
+    console.log('available')
+    if(selectedDate && selectedTime && type){
+        console.log(type)
+        axios.get(`https://admin.asknello.com/api/checkappointment?date=${moment(selectedDate).format('dddd, MMMM DD, YYYY')}&time=${moment(selectedTime, 'h:mm a').format('h:mm a')}&caretype=${type}`).then(response => {
+               
+                //hideLoader();
+                console.log(response)
+                if(response.data.status=="booked"){
+                   
+                    
+                    setShowBtn(false);
+                   console.log('Already Booked')
+                   toast.error(`${response.data.message}`, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    });
+                }
+
+                // else if(response.data == 'false'){
+                //     setShowBtn(true)
+                //     console.log('correct')
+                // }
+
+                else{
+                    console.log('Not boooked')
+                    setShowBtn(true);
+                    toast.success(`${response.data.message}`, {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        });
+                }
+
+                
+              
+
+     
+            }).catch(error => {
+                console.log(error)
+            })
+
+
+    }
+}
+else{
+    setShowBtn(false)
+    // return NotificationManager.error("Select at least 30 mins after the current time");
+
+    if(selectedDate && selectedTime && type){
+        console.log(type)
+        toast.error('Select at least 30 mins after the current time', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+    }
+}
+
+
+}
+else {
+    //setShowBtn(true)
+    console.log('available')
+
+    if(selectedDate && selectedTime && type){
+        console.log(type)
+        axios.get(`https://admin.asknello.com/api/checkappointment?date=${moment(selectedDate).format('dddd, MMMM DD, YYYY')}&time=${moment(selectedTime, 'h:mm a').format('h:mm a')}&caretype=${type}`).then(response => {
+               
+                //hideLoader();
+                console.log(response.data.status)
+
+                if(response.data.status=="booked"){
+                   
+                    
+                    setShowBtn(false);
+                   console.log('Already Booked')
+                   toast.error(`${response.data.message}`, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    });
+                }
+
+                // else if(response.data == 'false'){
+                //     setShowBtn(true)
+                //     console.log('correct')
+                // }
+
+                else{
+                    console.log('Not boooked')
+                    setShowBtn(true);
+                    toast.success(`${response.data.message}`, {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        });
+                }
+
+                
+              
+
+     
+            }).catch(error => {
+                console.log(error)
+            })
+
+
+    }
+}
+
+
+
+
+
+    }, [selectedDate, selectedTime, type]);
+
+
+    
     
     return ( 
         <div className='container'>
@@ -63,27 +291,38 @@ function Home() {
         }} className='consultation'>Consultation Type</h4>
 
 
-
+<form id="form-appointment" onSubmit={handleSubmit(onSubmit)}>
         <div className='type row d-flex justify-content-around'>
-            <div className='col-md-4 shadow p-3 mb-5 bg-white rounded text-enter'>
+            <div className='col-md-4 shadow p-3 mb-5 bg-white rounded text-enter'
+            
+            >
+
+          
                 
-                <input style={{
-                    color:"red"
-                }} type="radio" name="type" value="General Practitioner"/> <span className='typevalue'>General Practitioner</span>
+                <input onChange={function(e){
+                    setType(e.target.value);
+                    console.log(type)
+                }} type="radio" name="type" value="General Practitioner"required/> <span className='typevalue'>General Practitioner</span>
                 <br/>
                 <span className='small'>30 mins</span>
             </div>
 
             <div className='col-md-4 shadow p-3 mb-5 bg-white rounded'>
                 
-                <input type="radio" name="type" value="Gynaecologist"/> <span className='typevalue'>Gynaecologist</span>
+                <input onChange={function(e){
+                    setType(e.target.value);
+                    console.log(type)
+                }} type="radio" name="type" value="Gynaecologist" required /> <span className='typevalue'>Gynaecologist</span>
                 <br/>
                 <span className='small'>30 mins</span>
             </div>
 
             <div className='col-md-4 shadow p-3 mb-5 bg-white rounded'>
                 
-                <input type="radio" name="type" value="Aesthetician"/> <span className='typevalue'>Aesthetician</span>
+                <input onChange={function(e){
+                    setType(e.target.value);
+                    console.log(type)
+                }} type="radio" name="type" value="Aesthetician" required/> <span className='typevalue'>Aesthetician</span>
                 <br/>
                 <span className='small'>30 mins</span>
             </div>
@@ -101,21 +340,36 @@ function Home() {
 
 
         {/* Calender Div */}
+        
 
         <div className='row preferreddate mt-4'>
             <div className='col-md-6 calenderdiv'>
 
-            <Calendar 
-            minDate={new Date()}
             
-            className="appointment-calendar"
-            next2Label={null}
-            prev2Label={null}
-            nextLabel={<i class="fas fa-chevron-right text-secondary"></i>}
-            prevLabel={<i class="fas fa-chevron-left text-secondary"></i>}
 
-            tileDisabled={({ date }) => date.getDay() === 0}
-            />
+           
+                    <Controller
+                                        name="date"
+                                        control={control}
+                                        rules={{ required: 'Appointment date is required' }}
+                                        render={({
+                                            field: { onChange, onBlur, value, name, ref },
+                                        }) => (
+                                            <Calendar 
+                                            minDate={new Date()}
+                                            onChange={onChange}
+                                            className="appointment-calendar"
+                                            next2Label={null}
+                                            prev2Label={null}
+                                            nextLabel={<i class="fas fa-chevron-right text-secondary"></i>}
+                                            prevLabel={<i class="fas fa-chevron-left text-secondary"></i>}
+                                
+                                            tileDisabled={({ date }) => date.getDay() === 0}
+                                            />
+                                
+                                        )}
+                                    />
+                                    <ErrorMsg errors={errors} name="date" />
 
             </div>
 
@@ -135,10 +389,13 @@ function Home() {
                                                     </div>)}
                                                 />)
                                             })}
+                                            <ErrorMsg errors={errors} name="time" />
                                         </div>
 
                                         
-            <div className='alert alert-info'>
+            
+
+            {selectedDate && selectedTime && (<div className='alert alert-info'>
                 <p style={{
                     fontSize:"15px",
 
@@ -146,8 +403,9 @@ function Home() {
                 <p style={{
                     fontSize:"14px",
                     fontWeight:"bold",
-                }}>Friday, October 21, 2022 by 2:00 pm</p>
-            </div>
+                }}><span className="text-sky"> {moment(selectedDate).format('dddd, MMMM DD, YYYY')}</span> by
+                <span className="text-sky"> {moment(selectedTime, 'h:mm a').format('h:mm a')}</span></p>
+            </div>)}
 
             </div>
 
@@ -160,7 +418,7 @@ function Home() {
         <br/>
         
             <div className='text-center'>
-            <button className='btn py-2'style={{
+            {showBtn ?  <button type="submit" className='btn py-2'style={{
                 background:"#D07750",
                 color:"white",
                 borderRadius:"30px",
@@ -169,9 +427,33 @@ function Home() {
                 margin:"auto",
                 fontWeight:"600"
                 
-            }}>Next to Continue</button>
+            }}>Next to Continue</button> : <div></div>}
+            {/* <button type="submit" className='btn py-2'style={{
+                background:"#D07750",
+                color:"white",
+                borderRadius:"30px",
+                width:"40%",
+                fontSize:"18px",
+                margin:"auto",
+                fontWeight:"600"
+                
+            }}>Next to Continue</button> */}
             </div>
-       
+
+            </form>
+
+            <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            />
+                
 <br/>
 <br/>
         
