@@ -48,13 +48,7 @@ function Complete() {
             {location.state == null ? <Navigate to="/" /> :<div className='container'>
         <div className=' mt-4 hero'>
 
-            <div className='col-md-10 m-auto hero herobg card py-5 px-5' style={{
-                background: `url(${background})`,
-                backgroundRepeat:"no-repeat",
-                backgroundSize:"auto",
-                backgroundPosition:" right center"
-
-            }}>
+            <div className='col-md-10 m-auto hero herobg card py-3 px-5' >
 
             <h2 className='heroheading'>Booking Complete </h2>
             <p className='heropara'>Your have sucessfully booked an appointment.</p>

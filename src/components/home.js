@@ -342,10 +342,8 @@ else {
         <div className=' mt-4 hero'>
 
             <div className='col-md-10 m-auto hero herobg card py-5 px-5' style={{
-                background: `url(${background})`,
-                backgroundRepeat:"no-repeat",
-                backgroundSize:"auto",
-                backgroundPosition:" right center"
+                
+                
 
             }}>
 
@@ -519,16 +517,7 @@ else {
         <br/>
         
             <div className='text-center'>
-            {showBtn ?  <button type="submit" className='btn py-2'style={{
-                background:"#D07750",
-                color:"white",
-                borderRadius:"30px",
-                width:"40%",
-                fontSize:"18px",
-                margin:"auto",
-                fontWeight:"600"
-                
-            }}>Next to Continue</button> : <div></div>}
+            {showBtn ?  <button  type="submit" className='btn py-2 next'>Next to Continue</button> : <div></div>}
             {/* <button type="submit" className='btn py-2'style={{
                 background:"#D07750",
                 color:"white",

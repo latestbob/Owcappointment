@@ -110,10 +110,7 @@ function Summary() {
         <div className=' mt-4 hero'>
 
             <div className='col-md-10 m-auto hero herobg card py-5 px-5' style={{
-                background: `url(${background})`,
-                backgroundRepeat:"no-repeat",
-                backgroundSize:"auto",
-                backgroundPosition:" right center"
+               
 
             }}>
 
@@ -139,7 +136,7 @@ function Summary() {
 <p className='summarypara'> Duration : 30 mins</p>
 
                    
-<div className='text-left'>
+<div  className=' imgcenter'>
 
 <img src={summaryimage} className='summaryimage' alt="myimage"/>
 </div>
@@ -241,14 +238,8 @@ function Summary() {
             <br/>
             
             <div className='text-center'>
-        <button type="submit" className='btn py-2'style={{
-            background:"#D07750",
-            color:"white",
-            borderRadius:"30px",
-            width:"40%",
-            fontSize:"18px",
-            margin:"auto",
-            fontWeight:"600"
+        <button type="submit" className='btn py-2 next'style={{
+            
             
         }}>Comfirm Booking</button>
         </div>
