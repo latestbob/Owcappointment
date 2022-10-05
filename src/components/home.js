@@ -19,7 +19,7 @@ function Home() {
 
     
     const navigate = useNavigate();
-    const [times] = React.useState([
+    const [times, setTimes] = React.useState([
     
         { value: '09:00:00', label: '9:00 am', match: false },
         { value: '09:30:00', label: '9:30 am', match: false  },
@@ -62,6 +62,81 @@ function Home() {
            
 
     }
+
+
+    React.useEffect(() => {
+    
+        if(selectedDate && type){
+            axios.get(`https://admin.asknello.com/api/checktime?date=${moment(selectedDate).format('dddd, MMMM DD, YYYY')}&caretype=${type}`).then(response => {
+               
+                //hideLoader();
+                console.log(response)
+                if(response.data.status=="notbooked"){
+                   
+                    
+                   console.log('Available times');
+                   setTimes([
+                    { value: '09:00:00', label: '9:00 am', match: false },
+                    { value: '09:30:00', label: '9:30 am', match: false  },
+                    { value: '10:00:00', label: '10:00 am', match: false  },
+                    { value: '10:30:00', label: '10:30 am', match: false  },
+                    { value: '11:00:00', label: '11:00 am' , match: false },
+                    { value: '11:30:00', label: '11:30 am', match: false  },
+                    { value: '12:00:00', label: '12:00 pm', match: false },
+                    { value: '12:30:00', label: '12:30 pm', match: false  },
+                    
+                    { value: '14:00:00', label: '2:00 pm', match: false  },
+                    { value: '14:30:00', label: '2:30 pm', match: false  },
+                    { value: '15:00:00', label: '3:00 pm', match: false  },
+                    { value: '15:30:00', label: '3:00 pm', match: false  },
+                    { value: '16:00:00', label: '4:00 pm', match: false  },
+                    { value: '16:30:00', label: '4:30 pm', match: false  },
+                    { value: '17:00:00', label: '5:00 pm', match: false  },
+                   ])
+                }
+
+                // else if(response.data == 'false'){
+                //     setShowBtn(true)
+                //     console.log('correct')
+                // }
+
+                else{
+                    let booked = response.data.time;
+                    //console.log(moment(selectedTime, ["h:mm A"]).format("HH:mm") + ":00")
+
+                    let obj3 = []
+
+                        times.map(function(a) {
+                        let match = booked.filter(b => a.label === b.time);
+                        if (match.length) {
+                        obj3.push({value: a.value, label: a.label, match: true});
+                        } else {
+                        obj3.push({value: a.value, label: a.label, match: false});
+                        }
+                        })
+
+                        console.log(obj3);
+
+                        setTimes(obj3);
+
+                   
+                }
+
+                
+              
+
+     
+            }).catch(error => {
+                console.log(error)
+            })
+
+
+    }
+    
+
+
+    }, [selectedDate, type]);
+
 
     React.useEffect(() => {
         var pickedate = moment(selectedDate).format('dddd, MMMM DD, YYYY')
@@ -376,7 +451,12 @@ else {
             <div class="row">
                                             {times && times.map((row, index) => {
 
-                                                return (<Controller
+                                                return (
+
+                                                    <>
+                                                    {row.match == false ? <Controller
+                                                    
+                                                    
                                                     name="time"
                                                     control={control}
                                                     rules={{ required: 'Appointment time is required' }}
@@ -386,7 +466,29 @@ else {
                                                     onClick={() => setValue("time", row.value)}>
                                                         <div class={`time-picker ${value === row.value && 'active'}`}>{row.label}</div>
                                                     </div>)}
-                                                />)
+                                                /> : 
+                                                <div onClick={function(){
+                                                    toast.error(`${row.label} has already been book for a/an ${type} on ${moment(selectedDate).format('dddd, MMMM DD, YYYY')}`, {
+                                                        position: "top-right",
+                                                        autoClose: 5000,
+                                                        hideProgressBar: false,
+                                                        closeOnClick: true,
+                                                        pauseOnHover: true,
+                                                        draggable: true,
+                                                        progress: undefined,
+                                                        });
+                                                }} key={index} class="col-4"
+                                                >
+                                                    <div class="bg-secondary time-picker"style={{
+                                                        color:"white",
+                                                        border:"none",
+                                                    
+                                                    }}>{row.label}</div>
+                                                </div>
+                                            }
+                                                    </>
+                                               
+                                                )
                                             })}
                                             <ErrorMsg errors={errors} name="time" />
                                         </div>
