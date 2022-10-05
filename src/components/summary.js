@@ -80,7 +80,7 @@ function Summary() {
                         progress: undefined,
                         });
 
-                        navigate('/complete',{state:{type:type, date:moment(date).format('dddd, MMMM DD, YYYY'), time: moment(time, 'h:mm a').format('h:mm a'), email: email}});
+                        navigate('/complete',{state:{type:type, date:moment(date).format('dddd, MMMM DD, YYYY'), time: moment(time, 'h:mm a').format('h:mm a'), email: email, ref:response.data.data.ref}});
           
                      
                    

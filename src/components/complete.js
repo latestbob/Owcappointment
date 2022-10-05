@@ -18,6 +18,7 @@ function Complete() {
     const [date,setDate]=useState("");
     const [time,setTime ]=useState("");
     const [type ,  setType]=useState("");
+    const [ref , setRef] = useState("");
 
     
     
@@ -30,6 +31,7 @@ function Complete() {
         setDate(location.state.date);
         setTime(location.state.time);
         setType(location.state.type);
+        setRef(location.state.ref);
       
        }
         
@@ -91,7 +93,7 @@ function Complete() {
             </div>
             <br/>
 
-            <a href='' className='download2 btn py-2 rounded'>Download Acknowledgement Slip</a> <Link to="/" className='download btn py-2 rounded'>Book Another Appointment</Link>
+            <a href={`https://admin.asknello.com/booking/${ref}`} className='download2 btn py-2 rounded'>Download Acknowledgement Slip</a> <Link to="/" className='download btn py-2 rounded'>Book Another Appointment</Link>
             </div>
 
             </div>
