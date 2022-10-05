@@ -19,6 +19,7 @@ function Complete() {
     const [time,setTime ]=useState("");
     const [type ,  setType]=useState("");
     const [ref , setRef] = useState("");
+    const [email , setEmail] = useState("");
 
     
     
@@ -32,7 +33,7 @@ function Complete() {
         setTime(location.state.time);
         setType(location.state.type);
         setRef(location.state.ref);
-      
+        setEmail(location.state.email);
        }
         
         
@@ -84,7 +85,7 @@ function Complete() {
                     
                     <br/>
 
-                    Details of your recent appointment has been sent you <b>email</b>
+                    Details of your recent appointment has been sent to <b>{email}</b>
                     </p>
 
                     
