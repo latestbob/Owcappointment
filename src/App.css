@@ -173,7 +173,12 @@
 /* Summary */
 
 .summaryimage{
-  width: 100%;
+  width: 70%;
+  text-align: left;
+}
+.summaryimage2{
+  width: 80%;
+  
 }
 .summarypara{
   font-size:14px;
@@ -182,4 +187,17 @@
 }
 .summaryheading{
   color:#D07750;
+}
+
+.download {
+  background-color: #D07750;
+  font-size: 18px;
+  color:white;
+}
+
+
+.download2 {
+  background-color: #124B4F;
+  font-size: 18px;
+  color:white;
 }

@@ -1,12 +1,16 @@
 import React from 'react';
 import background from './heroo.png';
-import summaryimage from './summary.jpg';
+import summaryimage from './mainlogo.png';
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import { useState} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { Navigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+
 function Summary() {
     const [phone, setValue] = useState()
 
@@ -41,6 +45,62 @@ function Summary() {
         
     },[])
 
+
+    function onSubmit(e){
+        e.preventDefault()
+        
+        axios.post(`https://admin.asknello.com/api/owc/appointment`,{
+                        
+            //request body here to complete appointment process
+        date : moment(date).format('dddd, MMMM DD, YYYY'),
+        time : time,
+        
+        caretype : type,
+            title:title,
+            user_firstname:user_firstname,
+            user_lastname:user_lastname,
+            email:email,
+            gender:gender,
+            dob:dob,
+            phone:phone
+          
+        
+
+            }).then(response => {
+                console.log(response)
+                // hideLoader();
+                if(response.data.status == "success"){
+                    toast.success('Appointment Booked Successfully', {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        });
+
+                        navigate('/complete',{state:{type:type, date:moment(date).format('dddd, MMMM DD, YYYY'), time: moment(time, 'h:mm a').format('h:mm a'), email: email}});
+          
+                     
+                   
+                }
+
+     
+            }).catch(error => {
+                toast.error('An error occured, try again later', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    });
+            })
+
+        
+    }
     
 
 
@@ -79,13 +139,15 @@ function Summary() {
 <p className='summarypara'> Duration : 30 mins</p>
 
                    
-{/* 
-                     <img src={summaryimage} className='summaryimage' alt="myimage"/> */}
+<div className='text-left'>
+
+<img src={summaryimage} className='summaryimage' alt="myimage"/>
+</div>
                 </div>
 
                 <div className='formdiv col-md-7'>
                     
-                <form>
+                <form onSubmit={onSubmit}>
 
                 <div class="form-group row">
                 <label for="" class="col-sm-2 col-form-label">Title</label>
@@ -162,11 +224,15 @@ function Summary() {
                 <div class="col-sm-10">
                          <div class="form-check form-check-inline">
                 
-                <input class="form-check-input " type="radio" name="gender" id="inlineRadio1" value="Male" required/>
+                <input onChange={function(e){
+                    setGender(e.target.value)
+                }} class="form-check-input " type="radio" name="gender" id="inlineRadio1" value="Male" required/>
                 <label class="form-check-label" for="inlineRadio1">Male</label>
                 </div>
                 <div class="form-check form-check-inline">
-                <input class="form-check-input " type="radio" name="gender" id="inlineRadio2" value="Female" required/>
+                <input onChange={function(e){
+                    setGender(e.target.value)
+                }}  class="form-check-input " type="radio" name="gender" id="inlineRadio2" value="Female" required/>
                 <label class="form-check-label" for="inlineRadio2">Female</label>
                 </div>
                 </div>
@@ -194,6 +260,18 @@ function Summary() {
                 </div>
 
             </div>
+
+            <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            />
     </div>}
          
 </>
