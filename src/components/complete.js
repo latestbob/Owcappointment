@@ -41,8 +41,8 @@ function Complete() {
 
 
     return (  
-            
-            <div className='container'>
+            <>
+            {location.state == null ? <Navigate to="/" /> :<div className='container'>
         <div className=' mt-4 hero'>
 
             <div className='col-md-10 m-auto hero herobg card py-5 px-5' style={{
@@ -104,7 +104,9 @@ function Complete() {
             
     
          
-</div>
+</div> }
+            </>
+            
        
     );
 }
