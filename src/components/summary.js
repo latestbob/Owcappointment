@@ -242,7 +242,7 @@ function Summary() {
         <button type="submit" className='btn py-2 next'style={{
             
             
-        }}>Comfirm Booking</button>
+        }}>Confirm Booking</button>
         </div>
 
            
