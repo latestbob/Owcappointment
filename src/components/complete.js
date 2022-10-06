@@ -88,7 +88,7 @@ function Complete() {
             </div>
             <br/>
 
-            <a href={`https://admin.asknello.com/booking/${ref}`} className='download2 btn py-2 rounded'>Download Acknowledgement Slip</a> <Link to="/" className='download btn py-2 rounded'>Book Another Appointment</Link>
+            <a href={`https://admin.asknello.com/booking/${ref}`} className='download2 btn py-2 next2 rounded'>Download Acknowledgement Slip</a> <Link to="/" className='download btn py-2 rounded next2'>Book Another Appointment</Link>
             </div>
 
             </div>

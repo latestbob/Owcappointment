@@ -272,6 +272,11 @@
     margin-top: 50px;
   }
 
+  .next2{
+    width:100%;
+    font-size:18px;
+    margin-top:20px;
+  }
   .next {
     background:#D07750;
     color:white;
