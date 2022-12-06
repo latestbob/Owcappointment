@@ -414,7 +414,7 @@ else {
 
 <form id="form-appointment" onSubmit={handleSubmit(onSubmit)}>
         <div className='type row d-flex justify-content-around'>
-            <div className='col-md-4 shadow p-3 mb-5 bg-white rounded text-enter'
+            <div className='col-md-6 shadow p-3 mb-5 bg-white rounded text-enter'
             
             >
 
@@ -428,7 +428,7 @@ else {
                 <span className='small'>30 mins</span>
             </div>
 
-            <div className='col-md-4 shadow p-3 mb-5 bg-white rounded'>
+            <div className='col-md-6 shadow p-3 mb-5 bg-white rounded'>
                 
                 <input onChange={function(e){
                     setType(e.target.value);
@@ -438,7 +438,7 @@ else {
                 <span className='small'>30 mins</span>
             </div>
 
-            <div className='col-md-4 shadow p-3 mb-5 bg-white rounded'>
+            {/* <div className='col-md-4 shadow p-3 mb-5 bg-white rounded'>
                 
                 <input onChange={function(e){
                     setType(e.target.value);
@@ -446,7 +446,7 @@ else {
                 }} type="radio" name="type" value="Aesthetician" required/> <span className='typevalue'>Aesthetician</span>
                 <br/>
                 <span className='small'>30 mins</span>
-            </div>
+            </div> */}
 
         </div>
 
