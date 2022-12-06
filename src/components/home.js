@@ -16,7 +16,51 @@ import axios from 'axios';
 
 
 function Home() {
+    const date = new Date()
+    const [type, setType] = useState('');
 
+    //const datenumber = [24 , 12, 5, 4, 8];
+
+   const [datenumber , setDateNumber] = useState([]);
+
+    React.useEffect(() => {
+
+        axios.get(`https://admin.asknello.com/api/getdatearray?specialization=${type}`).then(response => {
+               
+                //hideLoader();
+                console.log(response)
+
+                setDateNumber(response.data);
+            
+
+              
+
+                console.log(datenumber[0]['dates']);
+              
+
+     
+            }).catch(error => {
+                console.log(error)
+            })
+
+    
+      
+    
+
+
+    }, [type]);
+
+    
+
+   const setClass = (date) => {
+        const dateobj =
+          datenumber.find((x) => {
+            return (
+              date.getDate() === parseInt(x['dates'])
+            );
+          });
+        return !  dateobj ;}
+        
     
     const navigate = useNavigate();
     const [times, setTimes] = React.useState([
@@ -46,7 +90,7 @@ function Home() {
     const { register, handleSubmit, setValue, getValues, watch, control, formState: { errors } } = useForm();
     
 
-    const [type, setType] = useState('');
+    
 
     const selectedDate = watch('date');
     const selectedTime = watch('time');
@@ -65,6 +109,11 @@ function Home() {
 
 
     React.useEffect(() => {
+
+       
+
+        console.log(moment(new Date(date.getFullYear(), date.getMonth() + 1, 0)).format('dddd, MMMM DD, YYYY'))
+        console.log(new Date(date.getFullYear(), date.getMonth() + 1, 0));
     
         if(selectedDate && type){
             axios.get(`https://admin.asknello.com/api/checktime?date=${moment(selectedDate).format('dddd, MMMM DD, YYYY')}&caretype=${type}`).then(response => {
@@ -429,14 +478,24 @@ else {
                                         }) => (
                                             <Calendar 
                                             minDate={new Date()}
+                                            maxDate={new Date(date.getFullYear(), date.getMonth() + 1, 0)}
                                             onChange={onChange}
                                             className="appointment-calendar"
                                             next2Label={null}
                                             prev2Label={null}
                                             nextLabel={<i class="fas fa-chevron-right text-secondary"></i>}
                                             prevLabel={<i class="fas fa-chevron-left text-secondary"></i>}
+
+                                          
+
+
                                 
-                                            tileDisabled={({ date }) => date.getDay() === 0}
+                                            tileDisabled={({ date }) => setClass(date) }
+
+                                           //tileDisabled={({ date }) => date.getDate() === (datenumber[1] || datenumber[2])}
+
+                                           
+                                           
                                             />
                                 
                                         )}
