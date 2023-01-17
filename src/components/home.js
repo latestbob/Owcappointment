@@ -66,7 +66,7 @@ function Home() {
     const [times, setTimes] = React.useState([
     
 
-        { value: '01:00:00', label: '1:00 am', match: false  },
+        
         { value: '09:00:00', label: '9:00 am', match: false },
         { value: '09:30:00', label: '9:30 am', match: false  },
         { value: '10:00:00', label: '10:00 am', match: false  },
@@ -131,7 +131,7 @@ function Home() {
                     if(moment(selectedDate).format('dddd, MMMM DD, YYYY') !=  moment().format('dddd, MMMM DD, YYYY')){
                         setTimes([
 
-                            { value: '01:00:00', label: '1:00 am', match: false  },
+                          
                             { value: '09:00:00', label: '9:00 am', match: false },
                             { value: '09:30:00', label: '9:30 am', match: false  },
                             { value: '10:00:00', label: '10:00 am', match: false  },
