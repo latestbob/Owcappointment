@@ -65,6 +65,8 @@ function Home() {
     const navigate = useNavigate();
     const [times, setTimes] = React.useState([
     
+
+        { value: '01:00:00', label: '1:00 am', match: false  },
         { value: '09:00:00', label: '9:00 am', match: false },
         { value: '09:30:00', label: '9:30 am', match: false  },
         { value: '10:00:00', label: '10:00 am', match: false  },
@@ -81,6 +83,7 @@ function Home() {
         { value: '16:00:00', label: '4:00 pm', match: false  },
         { value: '16:30:00', label: '4:30 pm', match: false  },
         { value: '17:00:00', label: '5:00 pm', match: false  },
+        
        
         // { value: '18:00:00', label: '6:00 pm' },
         // { value: '19:00:00', label: '7:00 pm' },
@@ -124,25 +127,66 @@ function Home() {
                    
                     
                    console.log('Available times');
-                   setTimes([
-                    { value: '09:00:00', label: '9:00 am', match: false },
-                    { value: '09:30:00', label: '9:30 am', match: false  },
-                    { value: '10:00:00', label: '10:00 am', match: false  },
-                    { value: '10:30:00', label: '10:30 am', match: false  },
-                    { value: '11:00:00', label: '11:00 am' , match: false },
-                    { value: '11:30:00', label: '11:30 am', match: false  },
-                    { value: '12:00:00', label: '12:00 pm', match: false },
-                    { value: '12:30:00', label: '12:30 pm', match: false  },
-                    
-                    { value: '14:00:00', label: '2:00 pm', match: false  },
-                    { value: '14:30:00', label: '2:30 pm', match: false  },
-                    { value: '15:00:00', label: '3:00 pm', match: false  },
-                    { value: '15:30:00', label: '3:30 pm', match: false  },
-                    { value: '16:00:00', label: '4:00 pm', match: false  },
-                    { value: '16:30:00', label: '4:30 pm', match: false  },
-                    { value: '17:00:00', label: '5:00 pm', match: false  },
-                   ])
+
+                    if(moment(selectedDate).format('dddd, MMMM DD, YYYY') !=  moment().format('dddd, MMMM DD, YYYY')){
+                        setTimes([
+
+                            { value: '01:00:00', label: '1:00 am', match: false  },
+                            { value: '09:00:00', label: '9:00 am', match: false },
+                            { value: '09:30:00', label: '9:30 am', match: false  },
+                            { value: '10:00:00', label: '10:00 am', match: false  },
+                            { value: '10:30:00', label: '10:30 am', match: false  },
+                            { value: '11:00:00', label: '11:00 am' , match: false },
+                            { value: '11:30:00', label: '11:30 am', match: false  },
+                            { value: '12:00:00', label: '12:00 pm', match: false },
+                            { value: '12:30:00', label: '12:30 pm', match: false  },
+                            
+                            { value: '14:00:00', label: '2:00 pm', match: false  },
+                            { value: '14:30:00', label: '2:30 pm', match: false  },
+                            { value: '15:00:00', label: '3:00 pm', match: false  },
+                            { value: '15:30:00', label: '3:30 pm', match: false  },
+                            { value: '16:00:00', label: '4:00 pm', match: false  },
+                            { value: '16:30:00', label: '4:30 pm', match: false  },
+                            { value: '17:00:00', label: '5:00 pm', match: false  },
+                           
+                           ])
+                    }
+
+                    else{
+
+                        let newtime = [];
+
+
+                        let passed = times.filter(time => {
+                            return +moment().add(30, 'minutes').format('x') > +moment(time.value, 'h:mm a').format('x');
+                          });
+
+                          let present = times.filter(time => {
+                            return +moment().add(30, 'minutes').format('x') < +moment(time.value, 'h:mm a').format('x');
+                          });
+
+                          //console.log(passed);
+                          passed.map(function(row, index){
+                            newtime.push({value: row.value, label: row.label, match: true});
+                          })
+
+                          present.map(function(row, index){
+                            newtime.push({value: row.value, label: row.label, match: false});
+                          })
+                          
+
+                          setTimes(newtime);
+
+                      
+                    }
+
+                   
                 }
+
+
+
+
+                
 
                 // else if(response.data == 'false'){
                 //     setShowBtn(true)
@@ -153,7 +197,8 @@ function Home() {
                     let booked = response.data.time;
                     //console.log(moment(selectedTime, ["h:mm A"]).format("HH:mm") + ":00")
 
-                    let obj3 = []
+                    if(moment(selectedDate).format('dddd, MMMM DD, YYYY') !=  moment().format('dddd, MMMM DD, YYYY')){
+                         let obj3 = []
 
                         times.map(function(a) {
                         let match = booked.filter(b => a.label === b.time);
@@ -167,6 +212,49 @@ function Home() {
                         console.log(obj3);
 
                         setTimes(obj3);
+
+                    }
+
+                    else{
+                        let obj3 = []
+
+                        times.map(function(a) {
+                        let match = booked.filter(b => a.label === b.time || +moment().add(30, 'minutes').format('x') > +moment(a.value, 'h:mm a').format('x'));
+                        if (match.length) {
+                        obj3.push({value: a.value, label: a.label, match: true});
+                        } else {
+                        obj3.push({value: a.value, label: a.label, match: false});
+                        }
+                        })
+
+                        console.log(obj3);
+
+                        setTimes(obj3);
+
+                    //    let newtime = [];
+
+
+                    //     let passed = times.filter(time => {
+                    //         return +moment().add(30, 'minutes').format('x') > +moment(time.value, 'h:mm a').format('x');
+                    //       });
+
+                    //       let present = times.filter(time => {
+                    //         return +moment().add(30, 'minutes').format('x') < +moment(time.value, 'h:mm a').format('x');
+                    //       });
+
+                    //       //console.log(passed);
+                    //       passed.map(function(row, index){
+                    //         newtime.push({value: row.value, label: row.label, match: true});
+                    //       })
+
+                    //       present.map(function(row, index){
+                    //         newtime.push({value: row.value, label: row.label, match: false});
+                    //       })
+
+                        
+
+                    //     setTimes(newtime);
+                    }
 
                    
                 }
@@ -193,8 +281,10 @@ function Home() {
         // console.log(moment(selectedDate).format('dddd, MMMM DD, YYYY'));
         // console.log(moment().format('dddd, MMMM DD, YYYY'))
 
-        console.log(pickedate);
-        console.log(todaydated)
+        console.log('date selected is' + pickedate);
+        console.log('today date is ' + todaydated)
+
+
 
         //console.log(moment(selectedTime, 'h:mm a').format('h:mm a'))
 
@@ -238,8 +328,9 @@ var f = e / 60000
 
 var g = (e - c) / 60000
 
-// console.log(e)
-// console.log(f)
+ console.log('check this out ' + +moment().add(30, 'minutes').format('x'))
+ console.log('check this out two' + +moment("10:00:00", 'h:mm a').format('x'))
+// console.log(f)10:00:00
 console.log(parseInt(g))
 
 /// check if g is greater than 0
@@ -505,7 +596,11 @@ else {
             </div>
 
             <div className='timediv col-md-6'>
-            <div class="row">
+
+                {
+                    
+                    selectedDate && type && (
+                    <div class="row">
                                             {times && times.map((row, index) => {
 
                                                 return (
@@ -519,22 +614,37 @@ else {
                                                     rules={{ required: 'Appointment time is required' }}
                                                     render={({
                                                         field: { onChange, onBlur, value, name, ref },
-                                                    }) => (<div key={index} class="col-4"
+                                                    }) => (
+                                                    
+                                                    
+                                                    <div key={index} class="col-4"
                                                     onClick={() => setValue("time", row.value)}>
+
+                                                     
+
                                                         <div class={`time-picker ${value === row.value && 'active'}`}>{row.label}</div>
-                                                    </div>)}
+
+
+                                                    </div>
+                                                    
+                                                    
+                                                    )}
                                                 /> : 
-                                                <div onClick={function(){
-                                                    toast.error(`${row.label} has already been book for a/an ${type} on ${moment(selectedDate).format('dddd, MMMM DD, YYYY')}`, {
-                                                        position: "top-right",
-                                                        autoClose: 5000,
-                                                        hideProgressBar: false,
-                                                        closeOnClick: true,
-                                                        pauseOnHover: true,
-                                                        draggable: true,
-                                                        progress: undefined,
-                                                        });
-                                                }} key={index} class="col-4"
+                                                <div 
+                                                
+                                                // onClick={function(){
+                                                //     toast.error(`${row.label} has already been book for a/an ${type} on ${moment(selectedDate).format('dddd, MMMM DD, YYYY')}`, {
+                                                //         position: "top-right",
+                                                //         autoClose: 5000,
+                                                //         hideProgressBar: false,
+                                                //         closeOnClick: true,
+                                                //         pauseOnHover: true,
+                                                //         draggable: true,
+                                                //         progress: undefined,
+                                                //         });
+                                                // }} 
+                                                
+                                                key={index} class="col-4"
                                                 >
                                                     <div class="bg-secondary time-picker"style={{
                                                         color:"white",
@@ -550,20 +660,31 @@ else {
                                             <ErrorMsg errors={errors} name="time" />
                                         </div>
 
+                    )
+                                        // kkk
+
+                                        
+
+                                       
+                }
+
+
+            
+
                                         
             
 
-            {selectedDate && selectedTime && (<div className='alert alert-info'>
-                <p style={{
-                    fontSize:"15px",
+                          {selectedDate && selectedTime && (<div className='alert alert-info'>
+                            <p style={{
+                                fontSize:"15px",
 
-                }}>You have selected </p> 
-                <p style={{
-                    fontSize:"14px",
-                    fontWeight:"bold",
-                }}><span className="text-sky"> {moment(selectedDate).format('dddd, MMMM DD, YYYY')}</span> by
-                <span className="text-sky"> {moment(selectedTime, 'h:mm a').format('h:mm a')}</span></p>
-            </div>)}
+                            }}>You have selected </p> 
+                            <p style={{
+                                fontSize:"14px",
+                                fontWeight:"bold",
+                            }}><span className="text-sky"> {moment(selectedDate).format('dddd, MMMM DD, YYYY')}</span> by
+                            <span className="text-sky"> {moment(selectedTime, 'h:mm a').format('h:mm a')}</span></p>
+                        </div>)}
 
             </div>
 
