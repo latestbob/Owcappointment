@@ -603,6 +603,20 @@ else {
                     <div class="row">
                                             {times && times.map((row, index) => {
 
+                                                if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Thursday, January 26, 2023"){
+                                                    if(row.label == "11:00 am" || row.label == "12:00 pm"){
+                                                        row.match = true;
+                                                    }
+                                                }
+
+                                               else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Friday, January 27, 2023"){
+                                                    if(row.label == "3:30 pm"){
+                                                        row.match = true;
+                                                    }
+                                                }
+
+                                                
+
                                                 return (
 
                                                     <>
@@ -632,17 +646,7 @@ else {
                                                 /> : 
                                                 <div 
                                                 
-                                                // onClick={function(){
-                                                //     toast.error(`${row.label} has already been book for a/an ${type} on ${moment(selectedDate).format('dddd, MMMM DD, YYYY')}`, {
-                                                //         position: "top-right",
-                                                //         autoClose: 5000,
-                                                //         hideProgressBar: false,
-                                                //         closeOnClick: true,
-                                                //         pauseOnHover: true,
-                                                //         draggable: true,
-                                                //         progress: undefined,
-                                                //         });
-                                                // }} 
+                                               
                                                 
                                                 key={index} class="col-4"
                                                 >
