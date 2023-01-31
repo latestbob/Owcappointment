@@ -569,7 +569,7 @@ else {
                                         }) => (
                                             <Calendar 
                                             minDate={new Date()}
-                                            maxDate={new Date(date.getFullYear(), date.getMonth() + 1, 0)}
+                                            maxDate={new Date(date.getFullYear(), date.getMonth() + 2, 0)}  //change it back to 1
                                             onChange={onChange}
                                             className="appointment-calendar"
                                             next2Label={null}
@@ -603,17 +603,53 @@ else {
                     <div class="row">
                                             {times && times.map((row, index) => {
 
-                                                if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Thursday, January 26, 2023"){
-                                                    if(row.label == "11:00 am" || row.label == "12:00 pm"){
+                                                if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Thursday, February 02, 2023"){
+                                                    if(row.label == "10:00 am"){
                                                         row.match = true;
                                                     }
                                                 }
 
-                                               else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Friday, January 27, 2023"){
-                                                    if(row.label == "3:30 pm"){
+                                               else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Friday, February 03, 2023"){
+                                                    if(row.label == "9:00 am" || row.label == "9:30 am" || row.label == "10:00 am" || row.label == "10:30 am" || row.label == "11:00 am" || row.label == "11:30 am" || row.label == "12:00 pm" || row.label == "12:30 pm" || row.label == "1:00 pm" || row.label =="2:00 pm") {
                                                         row.match = true;
                                                     }
                                                 }
+
+
+                                                else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Saturday, February 04, 2023"){
+                                                    if(row.label == "10:30 am" ||row.label == "12:00 pm"){
+                                                        row.match = true;
+                                                    }
+                                                }
+
+
+                                                else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Monday, February 06, 2023"){
+                                                    if(row.label == "10:00 am" ||row.label == "10:30 am" ||row.label == "11:00 am"){
+                                                        row.match = true;
+                                                    }
+                                                }
+
+
+                                                else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Wednesday, February 08, 2023"){
+                                                    if(row.label == "10:00 am"){
+                                                        row.match = true;
+                                                    }
+                                                }
+
+
+                                                else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Friday, February 10, 2023"){
+                                                    if(row.label == "3:00 pm"){
+                                                        row.match = true;
+                                                    }
+                                                }
+
+                                                else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Monday, February 13, 2023"){
+                                                    if(row.label == "9:00 am"){
+                                                        row.match = true;
+                                                    }
+                                                }
+
+
 
                                                 
 
