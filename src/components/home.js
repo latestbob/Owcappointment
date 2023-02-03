@@ -569,7 +569,7 @@ else {
                                         }) => (
                                             <Calendar 
                                             minDate={new Date()}
-                                            maxDate={new Date(date.getFullYear(), date.getMonth() + 2, 0)}  //change it back to 1
+                                            maxDate={new Date(date.getFullYear(), date.getMonth() + 1, 0)}  //change it back to 1
                                             onChange={onChange}
                                             className="appointment-calendar"
                                             next2Label={null}
@@ -624,7 +624,7 @@ else {
 
 
                                                 else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Monday, February 06, 2023"){
-                                                    if(row.label == "9:00 am" || row.label == "9:30 am" || row.label == "10:00 am" ||row.label == "10:30 am" ||row.label == "11:00 am" || row.label == "11:30 am"){
+                                                    if(row.label == "9:00 am" || row.label == "9:30 am" || row.label == "10:00 am" ||row.label == "10:30 am" ||row.label == "11:00 am" || row.label == "11:30 am" || row.label == "3:00 pm" || row.label == "3:30 pm" || row.label == "4:00 pm" || row.label == "4:30 pm" || row.label == "5:00 pm"){
                                                         row.match = true;
                                                     }
                                                 }
