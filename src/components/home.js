@@ -644,7 +644,7 @@ else {
 
 
                                                 else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Friday, February 10, 2023"){
-                                                    if(row.label == "3:00 pm"){
+                                                    if(row.label == "10:00 am" || row.label == "3:00 pm"){
                                                         row.match = true;
                                                     }
                                                 }
