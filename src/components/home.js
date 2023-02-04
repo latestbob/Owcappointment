@@ -624,20 +624,20 @@ else {
 
 
                                                 else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Monday, February 06, 2023"){
-                                                    if(row.label == "9:00 am" || row.label == "9:30 am" || row.label == "10:00 am" ||row.label == "10:30 am" ||row.label == "11:00 am" || row.label == "11:30 am" || row.label == "3:00 pm" || row.label == "3:30 pm" || row.label == "4:00 pm" || row.label == "4:30 pm" || row.label == "5:00 pm"){
+                                                    if(row.label == "9:00 am" || row.label == "9:30 am" || row.label == "10:00 am" ||row.label == "10:30 am" ||row.label == "11:00 am" || row.label == "11:30 am" || row.label == "3:00 pm" || row.label == "3:30 pm" || row.label == "4:00 pm" || row.label == "4:30 pm" || row.label == "5:00 pm" || row.label == "12:00 pm"){
                                                         row.match = true;
                                                     }
                                                 }
 
                                                 else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Tuesday, February 07, 2023"){
-                                                    if(row.label == "9:00 am" || row.label == "9:30 am" || row.label == "10:00 am" || row.label == "10:30 am" || row.label == "11:00 am" || row.label == "11:30 am" || row.label == "12:00 pm" || row.label == "12:30 pm" || row.label == "1:00 pm") {
+                                                    if(row.label == "9:00 am" || row.label == "9:30 am" || row.label == "10:00 am" || row.label == "10:30 am" || row.label == "11:00 am" || row.label == "11:30 am" || row.label == "12:00 pm" || row.label == "12:30 pm" || row.label == "1:00 pm" || row.label == "4:30 pm") {
                                                         row.match = true;
                                                     }
                                                 }
 
 
                                                 else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Wednesday, February 08, 2023"){
-                                                    if(row.label == "10:00 am" || row.label == "10:30 am"){
+                                                    if(row.label == "10:00 am" || row.label == "10:30 am" || row.label == "1:00 pm" || row.label == "12:00 pm"){
                                                         row.match = true;
                                                     }
                                                 }
