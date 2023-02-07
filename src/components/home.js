@@ -642,6 +642,12 @@ else {
                                                     }
                                                 }
 
+                                                else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Thursday, February 09, 2023"){
+                                                    if(row.label == "9:00 am"){
+                                                        row.match = true;
+                                                    }
+                                                }
+
 
                                                 else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Friday, February 10, 2023"){
                                                     if(row.label == "10:00 am" || row.label == "3:00 pm" || row.label == "5:00 pm"){
