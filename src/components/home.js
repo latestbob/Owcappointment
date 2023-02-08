@@ -20,8 +20,12 @@ function Home() {
     const [type, setType] = useState('');
 
     //const datenumber = [24 , 12, 5, 4, 8];
+    const [blockedtime , setBlockedTime] = useState([]);
 
    const [datenumber , setDateNumber] = useState([]);
+
+   
+    //GET BLOCKED TIM E OWC
 
     React.useEffect(() => {
 
@@ -49,6 +53,12 @@ function Home() {
 
 
     }, [type]);
+
+
+
+
+
+    ////
 
     
 
@@ -109,6 +119,36 @@ function Home() {
            
 
     }
+
+
+
+    React.useEffect(() => {
+
+        axios.get(`https://admin.asknello.com/api/owcblocktime?date=${moment(selectedDate).format('dddd, MMMM DD, YYYY')}&type=${type}`).then(response => {
+               
+                //hideLoader();
+                console.log("This is the blocked time" + response.data)
+
+                setBlockedTime(response.data);
+            
+
+              
+
+               
+              
+
+     
+            }).catch(error => {
+                console.log(error)
+            })
+
+    
+      
+    
+
+
+    }, [selectedDate , type]);
+
 
 
     React.useEffect(() => {
@@ -603,63 +643,67 @@ else {
                     <div class="row">
                                             {times && times.map((row, index) => {
 
-                                                if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Thursday, February 02, 2023"){
-                                                    if(row.label == "10:00 am"){
-                                                        row.match = true;
-                                                    }
+                                                if(blockedtime.includes(row.label)){
+                                                    row.match = true;
                                                 }
 
-                                               else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Friday, February 03, 2023"){
-                                                    if(row.label == "9:00 am" || row.label == "9:30 am" || row.label == "10:00 am" || row.label == "10:30 am" || row.label == "11:00 am" || row.label == "11:30 am" || row.label == "12:00 pm" || row.label == "12:30 pm" || row.label == "1:00 pm" || row.label =="2:00 pm") {
-                                                        row.match = true;
-                                                    }
-                                                }
+                                            //     if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Thursday, February 02, 2023"){
+                                            //         if(row.label == "10:00 am"){
+                                            //             row.match = true;
+                                            //         }
+                                            //     }
+
+                                            //    else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Friday, February 03, 2023"){
+                                            //         if(row.label == "9:00 am" || row.label == "9:30 am" || row.label == "10:00 am" || row.label == "10:30 am" || row.label == "11:00 am" || row.label == "11:30 am" || row.label == "12:00 pm" || row.label == "12:30 pm" || row.label == "1:00 pm" || row.label =="2:00 pm") {
+                                            //             row.match = true;
+                                            //         }
+                                            //     }
 
 
-                                                else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Saturday, February 04, 2023"){
-                                                    if(row.label == "10:30 am" ||row.label == "12:00 pm"){
-                                                        row.match = true;
-                                                    }
-                                                }
+                                            //     else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Saturday, February 04, 2023"){
+                                            //         if(row.label == "10:30 am" ||row.label == "12:00 pm"){
+                                            //             row.match = true;
+                                            //         }
+                                            //     }
 
 
-                                                else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Monday, February 06, 2023"){
-                                                    if(row.label == "9:00 am" || row.label == "9:30 am" || row.label == "10:00 am" ||row.label == "10:30 am" ||row.label == "11:00 am" || row.label == "11:30 am" || row.label == "3:00 pm" || row.label == "3:30 pm" || row.label == "4:00 pm" || row.label == "4:30 pm" || row.label == "5:00 pm" || row.label == "12:00 pm" || row.label == "12:00 pm" || row.label == "2:30 pm" || row.label ){
-                                                        row.match = true;
-                                                    }
-                                                }
+                                            //     else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Monday, February 06, 2023"){
+                                            //         if(row.label == "9:00 am" || row.label == "9:30 am" || row.label == "10:00 am" ||row.label == "10:30 am" ||row.label == "11:00 am" || row.label == "11:30 am" || row.label == "3:00 pm" || row.label == "3:30 pm" || row.label == "4:00 pm" || row.label == "4:30 pm" || row.label == "5:00 pm" || row.label == "12:00 pm" || row.label == "12:00 pm" || row.label == "2:30 pm" || row.label ){
+                                            //             row.match = true;
+                                            //         }
+                                            //     }
 
-                                                else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Tuesday, February 07, 2023"){
-                                                    if(row.label == "9:00 am" || row.label == "9:30 am" || row.label == "10:00 am" || row.label == "10:30 am" || row.label == "11:00 am" || row.label == "11:30 am" || row.label == "12:00 pm" || row.label == "12:30 pm" || row.label == "1:00 pm" || row.label == "4:30 pm" || row.label == "3:00 pm" || row.label == "3:30 pm" || row.label == "4:00 pm" || row.label == "5:00 pm" || row.label == "2:00 pm" || row.label == "2:30 pm")  {
-                                                        row.match = true;
-                                                    }
-                                                }
-
-
-                                                else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Wednesday, February 08, 2023"){
-                                                    if(row.label == "10:00 am" || row.label == "10:30 am" || row.label == "1:00 pm" || row.label == "12:00 pm" || row.label == "11:30 am"){
-                                                        row.match = true;
-                                                    }
-                                                }
-
-                                                else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Thursday, February 09, 2023"){
-                                                    if(row.label == "9:00 am" || row.label == "10:00 am" || row.label == "10:30 am" || row.label == "11:00 am"){
-                                                        row.match = true;
-                                                    }
-                                                }
+                                            //     else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Tuesday, February 07, 2023"){
+                                            //         if(row.label == "9:00 am" || row.label == "9:30 am" || row.label == "10:00 am" || row.label == "10:30 am" || row.label == "11:00 am" || row.label == "11:30 am" || row.label == "12:00 pm" || row.label == "12:30 pm" || row.label == "1:00 pm" || row.label == "4:30 pm" || row.label == "3:00 pm" || row.label == "3:30 pm" || row.label == "4:00 pm" || row.label == "5:00 pm" || row.label == "2:00 pm" || row.label == "2:30 pm")  {
+                                            //             row.match = true;
+                                            //         }
+                                            //     }
 
 
-                                                else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Friday, February 10, 2023"){
-                                                    if(row.label == "10:00 am" || row.label == "3:00 pm" || row.label == "5:00 pm"){
-                                                        row.match = true;
-                                                    }
-                                                }
+                                            //     else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Wednesday, February 08, 2023"){
+                                            //         if(row.label == "10:00 am" || row.label == "10:30 am" || row.label == "1:00 pm" || row.label == "12:00 pm" || row.label == "11:30 am"){
+                                            //             row.match = true;
+                                            //         }
+                                            //     }
 
-                                                else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Monday, February 13, 2023"){
-                                                    if(row.label == "9:00 am"){
-                                                        row.match = true;
-                                                    }
-                                                }
+                                            //     else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Thursday, February 09, 2023"){
+                                            //         if(row.label == "9:00 am" || row.label == "10:00 am" || row.label == "10:30 am" || row.label == "11:00 am"){
+                                            //             row.match = true;
+                                            //         }
+                                            //     }
+
+
+                                            //     else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Friday, February 10, 2023"){
+                                            //         if(row.label == "10:00 am" || row.label == "3:00 pm" || row.label == "5:00 pm"){
+                                            //             row.match = true;
+                                            //         }
+                                            //     }
+
+                                            //     else if(moment(selectedDate).format('dddd, MMMM DD, YYYY') == "Monday, February 13, 2023"){
+                                            //         if(row.label == "9:00 am"){
+                                            //             row.match = true;
+                                            //         }
+                                            //     }
 
 
 
