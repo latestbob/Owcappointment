@@ -24,22 +24,54 @@ function Home() {
 
    const [datenumber , setDateNumber] = useState([]);
 
+   const [mostdate, setMostDay] = useState([]);
+
    
     //GET BLOCKED TIM E OWC
 
-    React.useEffect(() => {
+    // React.useEffect(() => {
 
-        axios.get(`https://admin.asknello.com/api/getdatearray?specialization=${type}`).then(response => {
+    //     axios.get(`https://admin.asknello.com/api/getdatearray?specialization=${type}`).then(response => {
                
-                //hideLoader();
-                console.log(response)
+    //             //hideLoader();
+    //             console.log(response)
 
-                setDateNumber(response.data);
+    //             setDateNumber(response.data);
             
 
               
 
-                console.log(datenumber[0]['dates']);
+    //             console.log(datenumber[0]['dates']);
+              
+
+     
+    //         }).catch(error => {
+    //             console.log(error)
+    //         })
+
+    
+      
+    
+
+
+    // }, [type]);
+
+
+    React.useEffect(() => {
+
+        axios.get(`https://admin.asknello.com/api/owcgetmostdate?specialization=${type}`).then(response => {
+               
+                //hideLoader();
+                console.log(response)
+
+               // setDateNumber(response.data);
+            
+
+              
+
+               // console.log(datenumber[0]['dates']);
+
+               setMostDay(response.data);
               
 
      
@@ -62,14 +94,39 @@ function Home() {
 
     
 
-   const setClass = (date) => {
-        const dateobj =
-          datenumber.find((x) => {
-            return (
-              date.getDate() === parseInt(x['dates'])
-            );
-          });
-        return !  dateobj ;}
+//    const setClass = (date) => {
+//         const dateobj =
+//           datenumber.find((x) => {
+//             return (
+//               date.getDate() === parseInt(x['dates'])
+//             );
+//           });
+//         return !  dateobj ;}
+
+        // const setClass = (date) => {
+        //     const dateobj =
+        //       mostdate.find((x) => {
+        //         return (
+        //             moment(selectedDate).format('d/m/Y') === x
+        //         );
+        //       });
+        //     return !  dateobj ;}
+
+
+         // Convert date strings to Date objects
+  const enabledDates = mostdate.map((dateString) => {
+    const [day, month, year] = dateString.split("/");
+    return new Date(year, month - 1, day);
+  });
+
+  // Disable all dates except the ones in the enabledDates array
+  const tileDisabled = ({ date }) =>
+    !enabledDates.some(
+      (enabledDate) =>
+        enabledDate.getDate() === date.getDate() &&
+        enabledDate.getMonth() === date.getMonth() &&
+        enabledDate.getFullYear() === date.getFullYear()
+    );
         
     
     const navigate = useNavigate();
@@ -611,7 +668,7 @@ else {
                                         }) => (
                                             <Calendar 
                                             minDate={new Date()}
-                                            maxDate={new Date(date.getFullYear(), date.getMonth() + 1, 0)}  //change it back to 1
+                                            maxDate={new Date(date.getFullYear(), date.getMonth() + 2, 0)}  //change it back to 1
                                             onChange={onChange}
                                             className="appointment-calendar"
                                             next2Label={null}
@@ -623,10 +680,9 @@ else {
 
 
                                 
-                                            tileDisabled={({ date }) => setClass(date) }
-
-                                           //tileDisabled={({ date }) => date.getDate() === (datenumber[1] || datenumber[2])}
-
+                                           // tileDisabled={({ date }) => setClass(date) }
+                                           tileDisabled={tileDisabled}
+                                        
                                            
                                            
                                             />
