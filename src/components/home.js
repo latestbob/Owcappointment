@@ -130,6 +130,8 @@ function Home() {
                 console.log("This is the blocked time" + response.data)
 
                 setBlockedTime(response.data);
+
+                console.log(blockedtime);
             
 
               
