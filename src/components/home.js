@@ -142,6 +142,8 @@ function Home() {
         { value: '11:30:00', label: '11:30 am', match: false  },
         { value: '12:00:00', label: '12:00 pm', match: false },
         { value: '12:30:00', label: '12:30 pm', match: false  },
+        { value: '13:00:00', label: '1:00 pm', match: false },
+        { value: '13:30:00', label: '1:30 pm', match: false },
         
         { value: '14:00:00', label: '2:00 pm', match: false  },
         { value: '14:30:00', label: '2:30 pm', match: false  },
@@ -239,6 +241,8 @@ function Home() {
                             { value: '11:30:00', label: '11:30 am', match: false  },
                             { value: '12:00:00', label: '12:00 pm', match: false },
                             { value: '12:30:00', label: '12:30 pm', match: false  },
+                            { value: '13:00:00', label: '1:00 pm', match: false },
+                            { value: '13:30:00', label: '1:30 pm', match: false },
                             
                             { value: '14:00:00', label: '2:00 pm', match: false  },
                             { value: '14:30:00', label: '2:30 pm', match: false  },
