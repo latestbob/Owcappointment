@@ -28,7 +28,7 @@ function Summary() {
     const [email , setEmail] = useState("");
     const [gender , setGender] = useState("");
     const [dob , setDob] = useState("");
-    
+    const [loading, setLoading] = useState(false);
 
    
 
@@ -45,50 +45,28 @@ function Summary() {
         
     },[])
 
-
-    function onSubmit(e){
-        e.preventDefault()
+    async function onSubmit(e) {
+        e.preventDefault();
+        setLoading(true);
         
-        axios.post(`https://admin.asknello.com/api/owc/appointment`,{
-                        
-            //request body here to complete appointment process
-        date : moment(date).format('dddd, MMMM DD, YYYY'),
-        time : time,
-        
-        caretype : type,
-            title:title,
-            user_firstname:user_firstname,
-            user_lastname:user_lastname,
-            email:email,
-            gender:gender,
-            dob:dob,
-            phone:phone
-          
-        
-
-            }).then(response => {
-                console.log(response)
-                // hideLoader();
-                if(response.data.status == "success"){
-                    toast.success('Appointment Booked Successfully', {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        });
-
-                        navigate('/complete',{state:{type:type, date:moment(date).format('dddd, MMMM DD, YYYY'), time: moment(time, 'h:mm a').format('h:mm a'), email: email, ref:response.data.data.ref}});
-          
-                     
-                   
-                }
-
-     
-            }).catch(error => {
-                toast.error('An error occured, try again later', {
+        try {
+            const response = await axios.post(`https://admin.asknello.com/api/owc/appointment`, {
+                date: moment(date).format('dddd, MMMM DD, YYYY'),
+                time: time,
+                caretype: type,
+                title: title,
+                user_firstname: user_firstname,
+                user_lastname: user_lastname,
+                email: email,
+                gender: gender,
+                dob: dob,
+                phone: phone
+            });
+            
+            console.log(response);
+            
+            if (response.data.status === "success") {
+                toast.success('Appointment Booked Successfully', {
                     position: "top-right",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -96,11 +74,33 @@ function Summary() {
                     pauseOnHover: true,
                     draggable: true,
                     progress: undefined,
-                    });
-            })
-
-        
+                });
+                
+                navigate('/complete', {
+                    state: {
+                        type: type,
+                        date: moment(date).format('dddd, MMMM DD, YYYY'),
+                        time: moment(time, 'h:mm a').format('h:mm a'),
+                        email: email,
+                        ref: response.data.data.ref
+                    }
+                });
+            }
+        } catch (error) {
+            toast.error('An error occurred, try again later', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } finally {
+            setLoading(false);
+        }
     }
+    
     
 
 
@@ -239,10 +239,10 @@ function Summary() {
             <br/>
             
             <div className='text-center'>
-        <button type="submit" className='btn py-2 next'style={{
+        <button disabled={loading} type="submit" className='btn py-2 next'style={{
             
             
-        }}>Confirm Booking</button>
+        }}>{loading ? "Loading....":  "Confirm Booking"}</button>
         </div>
 
            
